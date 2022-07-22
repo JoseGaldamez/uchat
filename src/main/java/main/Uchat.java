@@ -18,6 +18,7 @@ public class Uchat {
             FirebaseConnection.connect();
         } catch (IOException e) {
             System.out.println("Algo salió mal durante la conexión.");
+            System.out.println("Hola mundo...");
         }
     }
 }

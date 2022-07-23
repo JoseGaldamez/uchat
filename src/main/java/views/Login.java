@@ -40,9 +40,7 @@ public class Login extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         TxtUser = new javax.swing.JTextField();
-        jSeparator2 = new javax.swing.JSeparator();
         TxtPassword = new javax.swing.JPasswordField();
-        jSeparator1 = new javax.swing.JSeparator();
         RBMostrar = new javax.swing.JCheckBox();
         LBSalir = new javax.swing.JLabel();
         BtnIngresar = new javax.swing.JButton();
@@ -56,7 +54,9 @@ public class Login extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(110, 223, 203));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 220, 310, 160));
+
+        jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\mdark\\OneDrive\\Escritorio\\proyecto programacion 1\\uchat\\Images\\logo version 2.png")); // NOI18N
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 230, 310, 160));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 550, 630));
 
@@ -68,7 +68,7 @@ public class Login extends javax.swing.JFrame {
         jLabel1.setText("Inicio De Sesión");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 70, -1, -1));
 
-        TxtUser.setBackground(new java.awt.Color(55, 73, 97));
+        TxtUser.setBackground(new java.awt.Color(65, 87, 117));
         TxtUser.setFont(new java.awt.Font("Lucida Sans", 1, 12)); // NOI18N
         TxtUser.setForeground(new java.awt.Color(255, 255, 255));
         TxtUser.setText("Usuario O Correo");
@@ -88,11 +88,7 @@ public class Login extends javax.swing.JFrame {
         jPanel2.add(TxtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 200, 280, 50));
         TxtUser.getAccessibleContext().setAccessibleDescription("");
 
-        jSeparator2.setBackground(new java.awt.Color(62, 77, 94));
-        jSeparator2.setForeground(new java.awt.Color(62, 77, 94));
-        jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 250, 480, 30));
-
-        TxtPassword.setBackground(new java.awt.Color(55, 73, 97));
+        TxtPassword.setBackground(new java.awt.Color(65, 87, 117));
         TxtPassword.setFont(new java.awt.Font("Lucida Sans", 1, 12)); // NOI18N
         TxtPassword.setForeground(new java.awt.Color(255, 255, 255));
         TxtPassword.setText("Password");
@@ -103,10 +99,6 @@ public class Login extends javax.swing.JFrame {
             }
         });
         jPanel2.add(TxtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 310, 280, 50));
-
-        jSeparator1.setBackground(new java.awt.Color(62, 77, 94));
-        jSeparator1.setForeground(new java.awt.Color(62, 77, 94));
-        jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, 480, 30));
 
         RBMostrar.setBackground(new java.awt.Color(55, 73, 97));
         RBMostrar.setFont(new java.awt.Font("Lucida Sans", 1, 12)); // NOI18N
@@ -353,7 +345,5 @@ TxtPassword.setEchoChar('*');
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
     // End of variables declaration//GEN-END:variables
 }

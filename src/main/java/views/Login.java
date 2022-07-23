@@ -112,6 +112,8 @@ public class Login extends javax.swing.JFrame {
         RBMostrar.setFont(new java.awt.Font("Lucida Sans", 1, 12)); // NOI18N
         RBMostrar.setForeground(new java.awt.Color(255, 255, 255));
         RBMostrar.setText("Mostrar Contraseña");
+        RBMostrar.setBorder(null);
+        RBMostrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         RBMostrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 RBMostrarActionPerformed(evt);
@@ -183,7 +185,11 @@ public class Login extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Lucida Sans", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Registrarte");
+        jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel3MouseEntered(evt);
             }
@@ -269,6 +275,14 @@ TxtPassword.setEchoChar('*');
         // TODO add your handling code here:
     }//GEN-LAST:event_TxtUserActionPerformed
 
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+      SingUp Show_SingUp = new SingUp();
+      Show_SingUp.setVisible(true);
+      this.dispose();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel3MouseClicked
+
     private void BtnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnIngresarActionPerformed
         // TODO add your handling code here:
         UserModel user = new UserModel(TxtUser.getText(), TxtPassword.getPassword().toString());
@@ -290,6 +304,7 @@ TxtPassword.setEchoChar('*');
         }
         
     }//GEN-LAST:event_BtnIngresarActionPerformed
+
 
     /**
      * @param args the command line arguments

@@ -5,6 +5,7 @@ package models;
  * @author jose_galdamez
  */
 
+
 public class UserModel {
     
     private String login;

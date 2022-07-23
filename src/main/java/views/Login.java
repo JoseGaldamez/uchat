@@ -4,7 +4,12 @@
  */
 package views;
 
+import controllers.LoginController;
 import java.awt.Color;
+import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import models.UserModel;
 
 /**
  *
@@ -51,8 +56,6 @@ public class Login extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(110, 223, 203));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\mdark\\OneDrive\\Escritorio\\proyecto programacion 1\\logo version 2.png")); // NOI18N
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 220, 310, 160));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 550, 630));
@@ -132,8 +135,12 @@ public class Login extends javax.swing.JFrame {
 
         BtnIngresar.setBackground(new java.awt.Color(110, 223, 203));
         BtnIngresar.setFont(new java.awt.Font("Lucida Sans", 1, 12)); // NOI18N
-        BtnIngresar.setForeground(new java.awt.Color(0, 0, 0));
         BtnIngresar.setText("INGRESAR");
+        BtnIngresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnIngresarActionPerformed(evt);
+            }
+        });
         jPanel2.add(BtnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 470, 200, 50));
 
         jLabel2.setFont(new java.awt.Font("Lucida Sans", 1, 12)); // NOI18N
@@ -268,12 +275,36 @@ TxtPassword.setEchoChar('*');
         // TODO add your handling code here:
     }//GEN-LAST:event_TxtUserActionPerformed
 
+
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
-SingUp Show_SingUp = new SingUp();
-Show_SingUp.setVisible(true);
-this.dispose();
+      SingUp Show_SingUp = new SingUp();
+      Show_SingUp.setVisible(true);
+      this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel3MouseClicked
+
+    private void BtnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnIngresarActionPerformed
+        // TODO add your handling code here:
+        UserModel user = new UserModel(TxtUser.getText(), TxtPassword.getPassword().toString());
+        boolean response = false;
+        
+        try {
+            response = LoginController.loginWithUserAndPassword(user);
+            
+        } catch (InterruptedException ex) {
+            System.out.println(ex);
+        } catch (ExecutionException ex) {
+            System.out.println(ex);
+        }
+        
+        if (response) {
+            System.out.println("Usuario encontrado");
+        } else {
+            System.out.println("No encontrado");
+        }
+        
+    }//GEN-LAST:event_BtnIngresarActionPerformed
+
 
     /**
      * @param args the command line arguments

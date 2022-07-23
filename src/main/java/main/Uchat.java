@@ -4,6 +4,7 @@ package main;
 
 import firebase.FirebaseConnection;
 import java.io.IOException;
+import views.Login;
 
 /**
  *
@@ -16,6 +17,8 @@ public class Uchat {
         
         try {
             FirebaseConnection.connect();
+            Login login = new Login();
+            login.setVisible(true);
         } catch (IOException e) {
             System.out.println("Algo salió mal durante la conexión.");
             System.out.println("Hola mundo...");

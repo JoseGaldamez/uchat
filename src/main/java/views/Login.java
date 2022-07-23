@@ -285,7 +285,7 @@ TxtPassword.setEchoChar('*');
 
     private void BtnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnIngresarActionPerformed
 
-        UserModel user = new UserModel(TxtUser.getText(), TxtPassword.getPassword().toString());
+        UserModel user = new UserModel(TxtUser.getText(), String.valueOf(TxtPassword.getPassword()));
         boolean response = false;
         
         try {

@@ -18,6 +18,11 @@ public class LoginController {
         
     }
     
+    public static boolean checkForEmailAndUsername(String email, String username) throws InterruptedException, ExecutionException{
+        boolean response = FirebaseConnection.searchUserByEmailAndUserName(email, username);
+        return response;
+    }
+    
     
     
 }

@@ -78,6 +78,31 @@ public class FirebaseConnection {
 
     }
     
+    public static boolean searchUserByEmailAndUserName( String email, String username ) throws InterruptedException, ExecutionException {
+        
+        CollectionReference collectionReference = db.collection("users");
+        ApiFuture<QuerySnapshot> result = collectionReference.get();
+        boolean response = false;
+        
+        for (DocumentSnapshot document : result.get().getDocuments()) {
+            System.out.println(document);
+            
+            if (document.getString("email").equals(email) ) {
+                
+                    response = true;    
+                
+            }
+            
+            if (document.getString("username").equals(username) ) {
+                    response = true;    
+            }
+            
+        }
+        
+        return response;
+
+    }
+    
    
 
 }

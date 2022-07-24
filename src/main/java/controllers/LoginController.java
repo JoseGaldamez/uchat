@@ -4,6 +4,7 @@ package controllers;
 import firebase.FirebaseConnection;
 import java.util.concurrent.ExecutionException;
 import models.UserModel;
+import utils.ProcessStates;
 
 /**
  *
@@ -11,18 +12,20 @@ import models.UserModel;
  */
 public class LoginController {
     
-    public static boolean loginWithUserAndPassword( UserModel user ) throws InterruptedException, ExecutionException{
+    public static int loginWithUserAndPassword( UserModel user ) throws InterruptedException, ExecutionException{
+     
+        if (user.getLogin().isEmpty()) {
+            return ProcessStates.USER_MISSING;
+        }
         
-        boolean login = FirebaseConnection.searchUserByEmailAndPassword(user);
-        return login;
+        if (user.getPassword().isEmpty()) {
+            return ProcessStates.PASSWORD_MISSING;
+        }
+        
+        int reponse = FirebaseConnection.searchUserByEmailAndPassword(user);
+        return reponse;
         
     }
-    
-    public static boolean checkForEmailAndUsername(String email, String username) throws InterruptedException, ExecutionException{
-        boolean response = FirebaseConnection.searchUserByEmailAndUserName(email, username);
-        return response;
-    }
-    
     
     
 }

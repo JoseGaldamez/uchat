@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import models.UserModel;
+import utils.ProcessStates;
 
 /**
  * @author jose_galdamez
@@ -52,23 +53,25 @@ public class FirebaseConnection {
         
     }
     
-    public static boolean searchUserByEmailAndPassword( UserModel user ) throws InterruptedException, ExecutionException {
+    public static int searchUserByEmailAndPassword( UserModel user ) throws InterruptedException, ExecutionException {
         
         CollectionReference collectionReference = db.collection("users");
         ApiFuture<QuerySnapshot> result = collectionReference.get();
-        boolean response = false;
+        
+        int response = ProcessStates.NOT_FOUND;
+        
         for (DocumentSnapshot document : result.get().getDocuments()) {
             System.out.println(document);
             
             if (document.getString("email").equals(user.getLogin()) ) {
                 if (document.getString("password").equals(user.getPassword())) {
-                    response = true;    
+                    response = ProcessStates.OK;
                 }
             }
             
             if (document.getString("username").equals(user.getLogin()) ) {
                 if (document.getString("password").equals(user.getPassword())) {
-                    response = true;    
+                    response = ProcessStates.OK;
                 }
             }
             

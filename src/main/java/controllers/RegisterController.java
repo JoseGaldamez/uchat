@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import models.RegisterModel;
+import utils.ProcessStates;
 
 /**
  *
@@ -21,7 +22,7 @@ public class RegisterController {
         }
         
         
-        if (LoginController.checkForEmailAndUsername(user.getEmail(), user.getUsername()) ) {
+        if ( FirebaseConnection.searchUserByEmailAndUserName(user.getEmail(), user.getUsername()) ) {
             return false;
         }
         

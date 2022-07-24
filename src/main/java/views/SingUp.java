@@ -36,7 +36,6 @@ public class SingUp extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtUser = new javax.swing.JTextField();
@@ -65,11 +64,6 @@ public class SingUp extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(110, 223, 203));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel9.setIcon(new javax.swing.ImageIcon("C:\\Users\\mdark\\OneDrive\\Escritorio\\proyecto programacion 1\\uchat\\Images\\logo version 2.png")); // NOI18N
-        jLabel9.setText("jLabel9");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 260, 290, 220));
-
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 530, 720));
 
         jPanel2.setBackground(new java.awt.Color(55, 73, 97));
@@ -339,7 +333,6 @@ public class SingUp extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField txtEmail;

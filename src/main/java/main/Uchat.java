@@ -8,7 +8,6 @@ import views.Login;
 //import views.PrincipalView;
 
 /**
- *
  * @author jose_galdamez
  */
 public class Uchat {
@@ -23,11 +22,8 @@ public class Uchat {
             
             //PrincipalView principal = new PrincipalView();
             //principal.setVisible(true);
-            
-            
         } catch (IOException e) {
             System.out.println("Algo salió mal durante la conexión.");
-            System.out.println("Hola mundo...");
         }
     }
 }

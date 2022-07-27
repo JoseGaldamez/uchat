@@ -4,7 +4,7 @@ import controllers.LoginController;
 import java.awt.Color;
 import java.util.concurrent.ExecutionException;
 import models.UserModel;
-import utils.ImagesOfProyect;
+import utils.ImagesOfProject;
 import utils.ProcessStates;
 
 /**
@@ -12,9 +12,6 @@ import utils.ProcessStates;
  */
 
 public class Login extends javax.swing.JFrame {
-    
-    Color backColorField = new Color(255, 255, 255, 20);
-
     /**
      * Creates new form Login
      */
@@ -24,15 +21,12 @@ public class Login extends javax.swing.JFrame {
         this.configureComponents();
     }
     
-    public void configureComponents(){
+    public final void configureComponents(){
         hintUser.grabFocus();
-        txtUser.setBackground(backColorField);
-        txtPassword.setBackground(backColorField);
         btnRegister.setForeground( new Color(120, 223, 203, 100) );
         clearErrors();
-        
-        labelLogo.setIcon(ImagesOfProyect.getLogoBack());
-        
+        labelLogo.setIcon(ImagesOfProject.getLogoBack() );
+        labelPeople.setIcon(ImagesOfProject.getPeople());
         
     }
     
@@ -55,6 +49,7 @@ public class Login extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         labelLogo = new javax.swing.JLabel();
+        labelPeople = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         errorUser = new javax.swing.JSeparator();
         txtUser = new javax.swing.JTextField();
@@ -75,9 +70,10 @@ public class Login extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(110, 223, 203));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel1.add(labelLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 130, 160));
 
-        labelLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(labelLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 340, 90));
+        labelPeople.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(labelPeople, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 340, 160));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 340, 490));
 
@@ -88,9 +84,9 @@ public class Login extends javax.swing.JFrame {
         errorUser.setForeground(new java.awt.Color(255, 51, 51));
         errorUser.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 51), 5));
         errorUser.setPreferredSize(new java.awt.Dimension(50, 3));
-        jPanel2.add(errorUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 290, -1));
+        jPanel2.add(errorUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 127, 290, -1));
 
-        txtUser.setBackground(new java.awt.Color(255, 255, 255));
+        txtUser.setBackground(new java.awt.Color(65, 87, 117));
         txtUser.setFont(new java.awt.Font("Lucida Sans", 1, 12)); // NOI18N
         txtUser.setForeground(new java.awt.Color(255, 255, 255));
         txtUser.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 15, 1, 1));
@@ -119,7 +115,7 @@ public class Login extends javax.swing.JFrame {
                 txtUserKeyPressed(evt);
             }
         });
-        jPanel2.add(txtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 290, 50));
+        jPanel2.add(txtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 290, 50));
         txtUser.getAccessibleContext().setAccessibleDescription("");
 
         errorPassword.setBackground(new java.awt.Color(255, 0, 51));
@@ -128,7 +124,7 @@ public class Login extends javax.swing.JFrame {
         errorPassword.setPreferredSize(new java.awt.Dimension(50, 3));
         jPanel2.add(errorPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 228, 290, -1));
 
-        txtPassword.setBackground(new java.awt.Color(255, 255, 255));
+        txtPassword.setBackground(new java.awt.Color(65, 87, 117));
         txtPassword.setFont(new java.awt.Font("Lucida Sans", 1, 12)); // NOI18N
         txtPassword.setForeground(new java.awt.Color(255, 255, 255));
         txtPassword.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 15, 1, 1));
@@ -213,7 +209,7 @@ public class Login extends javax.swing.JFrame {
                 jLabel2MouseExited(evt);
             }
         });
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 360, 160, 30));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, 160, 30));
 
         btnRegister.setFont(new java.awt.Font("Lucida Sans", 1, 12)); // NOI18N
         btnRegister.setForeground(new java.awt.Color(110, 223, 203));
@@ -234,16 +230,16 @@ public class Login extends javax.swing.JFrame {
 
         hintUser.setForeground(new java.awt.Color(255, 255, 255));
         hintUser.setText("Usuario o Email");
-        jPanel2.add(hintUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 127, -1, -1));
+        jPanel2.add(hintUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, -1, -1));
 
         hintPassword.setForeground(new java.awt.Color(255, 255, 255));
         hintPassword.setText("Contraseña");
-        jPanel2.add(hintPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 195, -1, -1));
+        jPanel2.add(hintPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, -1, -1));
 
         errorMessage.setForeground(new java.awt.Color(255, 102, 102));
         errorMessage.setText("Error del mensaje");
         errorMessage.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel2.add(errorMessage, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 420, -1, -1));
+        jPanel2.add(errorMessage, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 420, -1, -1));
 
         loading.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel2.add(loading, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 400, 60, 50));
@@ -347,6 +343,9 @@ public class Login extends javax.swing.JFrame {
         if (response == ProcessStates.OK ) {
             errorMessage.setText("Todo salio bien");
             errorMessage.setForeground(Color.GREEN);
+            PrincipalView principal = new PrincipalView();
+            principal.setVisible(true);
+            this.dispose();
             
         } else if (response == ProcessStates.NOT_FOUND){
             errorMessage.setText("Not matches");
@@ -376,28 +375,18 @@ public class Login extends javax.swing.JFrame {
     // show or hide hint of the textfields
     private void txtUserFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUserFocusGained
         // TODO add your handling code here:
-        hintUser.setVisible(false);
-        
     }//GEN-LAST:event_txtUserFocusGained
 
     private void txtUserFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUserFocusLost
         // TODO add your handling code here:
-        if (txtUser.getText().equals("")) {
-            hintUser.setVisible(true);
-        }
     }//GEN-LAST:event_txtUserFocusLost
 
     private void txtPasswordFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPasswordFocusGained
         // TODO add your handling code here:
-        hintPassword.setVisible(false);
-        
     }//GEN-LAST:event_txtPasswordFocusGained
 
     private void txtPasswordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPasswordFocusLost
         // TODO add your handling code here:
-        if ( String.valueOf( txtPassword.getPassword()).equals("") ) {
-            hintPassword.setVisible(true);
-        }
     }//GEN-LAST:event_txtPasswordFocusLost
 
     private void txtUserKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUserKeyPressed
@@ -424,6 +413,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel labelLogo;
+    private javax.swing.JLabel labelPeople;
     private javax.swing.JLabel loading;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUser;

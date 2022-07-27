@@ -12,6 +12,8 @@ import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
+import io.grpc.LoadBalancerRegistry;
+import io.grpc.internal.PickFirstLoadBalancerProvider;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -28,9 +30,11 @@ public class FirebaseConnection {
     static Firestore db;
     
     public static void connect() throws FileNotFoundException, IOException{
+        System.out.println("Hola firebase");
          FileInputStream serviceAccount =
         new FileInputStream("uth-chat-firebase.json");
 
+         System.out.println("Lei el archivo");
       FirebaseOptions options = new FirebaseOptions.Builder()
         .setCredentials(GoogleCredentials.fromStream(serviceAccount))
         .build();
@@ -54,6 +58,7 @@ public class FirebaseConnection {
     }
     
     public static int searchUserByEmailAndPassword( UserModel user ) throws InterruptedException, ExecutionException {
+        LoadBalancerRegistry.getDefaultRegistry().register(new PickFirstLoadBalancerProvider());
         
         CollectionReference collectionReference = db.collection("users");
         ApiFuture<QuerySnapshot> result = collectionReference.get();
@@ -61,7 +66,6 @@ public class FirebaseConnection {
         int response = ProcessStates.NOT_FOUND;
         
         for (DocumentSnapshot document : result.get().getDocuments()) {
-            System.out.println(document);
             
             if (document.getString("email").equals(user.getLogin()) ) {
                 if (document.getString("password").equals(user.getPassword())) {

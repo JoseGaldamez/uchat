@@ -6,6 +6,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.RegisterModel;
+import utils.ImagesOfProject;
 
 /**
  * @author mdark
@@ -18,6 +19,12 @@ public class SingUp extends javax.swing.JFrame {
     public SingUp() {
         initComponents();
         this.setLocationRelativeTo(null);
+        configure();
+    }
+    
+    public final void configure(){
+        labelLogo.setIcon(ImagesOfProject.getLogoBack());
+        labelPeople.setIcon(ImagesOfProject.getPeople());
     }
 
     /**
@@ -31,6 +38,8 @@ public class SingUp extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        labelLogo = new javax.swing.JLabel();
+        labelPeople = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         txtUser = new javax.swing.JTextField();
         txtName = new javax.swing.JTextField();
@@ -55,7 +64,12 @@ public class SingUp extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(110, 223, 203));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 370, 600));
+        jPanel1.add(labelLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 90, 130, 160));
+
+        labelPeople.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(labelPeople, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 440, 340, 160));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 340, 600));
 
         jPanel2.setBackground(new java.awt.Color(55, 73, 97));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -167,7 +181,7 @@ public class SingUp extends javax.swing.JFrame {
         jLabel11.setText("Confirmar");
         jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 320, -1, -1));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 0, 390, 600));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 0, 390, 600));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -247,6 +261,8 @@ public class SingUp extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel labelLogo;
+    private javax.swing.JLabel labelPeople;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtName;
     private javax.swing.JPasswordField txtPassword1;

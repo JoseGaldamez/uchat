@@ -4,7 +4,7 @@ import controllers.LoginController;
 import java.awt.Color;
 import java.util.concurrent.ExecutionException;
 import models.UserModel;
-import utils.ImagesOfProyect;
+import utils.ImagesOfProject;
 import utils.ProcessStates;
 
 /**
@@ -25,7 +25,9 @@ public class Login extends javax.swing.JFrame {
         hintUser.grabFocus();
         btnRegister.setForeground( new Color(120, 223, 203, 100) );
         clearErrors();
-        labelLogo.setIcon(ImagesOfProyect.getLogoBack());
+        labelLogo.setIcon(ImagesOfProject.getLogoBack() );
+        labelPeople.setIcon(ImagesOfProject.getPeople());
+        
     }
     
     public void clearErrors(){
@@ -47,6 +49,7 @@ public class Login extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         labelLogo = new javax.swing.JLabel();
+        labelPeople = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         errorUser = new javax.swing.JSeparator();
         txtUser = new javax.swing.JTextField();
@@ -67,9 +70,10 @@ public class Login extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(110, 223, 203));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel1.add(labelLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 130, 160));
 
-        labelLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(labelLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 340, 90));
+        labelPeople.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(labelPeople, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 340, 160));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 340, 490));
 
@@ -409,6 +413,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel labelLogo;
+    private javax.swing.JLabel labelPeople;
     private javax.swing.JLabel loading;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUser;

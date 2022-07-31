@@ -28,6 +28,10 @@ public class Login extends javax.swing.JFrame {
         labelLogo.setIcon(ImagesOfProject.getLogoBack() );
         labelPeople.setIcon(ImagesOfProject.getPeople());
         
+        txtUser.setText("josegaldamez1991@gmail.com");
+        txtPassword.setText("123456789");
+        
+        
     }
     
     public void clearErrors(){

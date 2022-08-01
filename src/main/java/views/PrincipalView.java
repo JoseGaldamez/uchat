@@ -1,51 +1,76 @@
 package views;
 
+import components.Messages;
+import components.Panels;
+import firebase.UserFirebase;
+import java.awt.Adjustable;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.awt.event.KeyEvent;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
+import models.UserFirebaseModel;
 
 /**
  * @author jose_galdamez
  */
 public class PrincipalView extends javax.swing.JFrame {
     
-    JScrollBar vertical;
-
     /**
      * Creates new form PrincipalView
      */
     public PrincipalView() {
         initComponents();
         this.setLocationRelativeTo(null);
-        panelChat.setLayout(new BoxLayout(panelChat, BoxLayout.PAGE_AXIS));
+        panelChat.setLayout(new BoxLayout(panelChat, BoxLayout.Y_AXIS));
+        listPeople.setLayout(new BoxLayout(listPeople, BoxLayout.Y_AXIS));
         panelChat.setBorder(new EmptyBorder(10,10,10,10));
-        vertical = scrollPanelChat.getVerticalScrollBar();
+        listPeople.setBorder(new EmptyBorder(10,10,10,10));
+        
+        fillPeopleList();
     }
     
-    public void getBottomVertical(){
-        vertical.setValue( vertical.getMaximum() );
+    private void scrollToBottom(JScrollPane scrollPane) {
+        JScrollBar verticalBar = scrollPane.getVerticalScrollBar();
+        AdjustmentListener downScroller = new AdjustmentListener() {
+            @Override
+            public void adjustmentValueChanged(AdjustmentEvent e) {
+                Adjustable adjustable = e.getAdjustable();
+                adjustable.setValue(adjustable.getMaximum());
+                verticalBar.removeAdjustmentListener(this);
+            }
+        };
+        verticalBar.addAdjustmentListener(downScroller);
+    }
+    
+    private void fillPeopleList(){
+        for(UserFirebaseModel user : UserFirebase.getPeople()){
+            JPanel paneluser = Panels.getPanelPeople(user) ;
+            listPeople.add(paneluser);
+            listPeople.add(Box.createRigidArea(new Dimension(0, 20)));
+        }
+        
+        listPeople.revalidate();
+        
+        
     }
     
     public void saveNewMessage(){
         String text = txtMessage.getText();
-        vertical.setValue( vertical.getMaximum() );
-        JLabel label = new JLabel(text);
-        label.setBackground(Color.WHITE);
-        label.setOpaque(true);
-        label.setBorder(new EmptyBorder(10,10,10,10));
-        
-        panelChat.add(label);
+        JLabel message = Messages.getMyMessage(text);        
+        panelChat.add(message);
         panelChat.add(Box.createRigidArea(new Dimension(0,10)));
         txtMessage.setText("");
 //      pack();
         panelChat.revalidate();
-        getBottomVertical();
+        scrollToBottom(scrollPanelChat);
     }
 
     /**
@@ -57,35 +82,21 @@ public class PrincipalView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        jPanel4 = new javax.swing.JPanel();
+        scrollPanelPeople = new javax.swing.JScrollPane();
+        listPeople = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtMessage = new javax.swing.JTextArea();
         scrollPanelChat = new javax.swing.JScrollPane();
         panelChat = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("UChat");
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPanel1.setBackground(new java.awt.Color(55, 73, 97));
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 230, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 630, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 230, 630));
 
         jPanel2.setBackground(new java.awt.Color(110, 223, 203));
 
@@ -113,21 +124,24 @@ public class PrincipalView extends javax.swing.JFrame {
         });
         jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 580, -1, 50));
 
-        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Personas"));
+        scrollPanelPeople.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 207, Short.MAX_VALUE)
+        listPeople.setMaximumSize(new java.awt.Dimension(270, 270));
+
+        javax.swing.GroupLayout listPeopleLayout = new javax.swing.GroupLayout(listPeople);
+        listPeople.setLayout(listPeopleLayout);
+        listPeopleLayout.setHorizontalGroup(
+            listPeopleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 270, Short.MAX_VALUE)
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 607, Short.MAX_VALUE)
+        listPeopleLayout.setVerticalGroup(
+            listPeopleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 688, Short.MAX_VALUE)
         );
 
-        jPanel3.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 0, -1, 630));
+        scrollPanelPeople.setViewportView(listPeople);
+
+        jPanel3.add(scrollPanelPeople, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 10, 220, 620));
 
         txtMessage.setColumns(20);
         txtMessage.setLineWrap(true);
@@ -149,7 +163,9 @@ public class PrincipalView extends javax.swing.JFrame {
         jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 580, 660, 50));
 
         scrollPanelChat.setBorder(null);
+        scrollPanelChat.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
+        panelChat.setBackground(new java.awt.Color(204, 255, 204));
         panelChat.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 0, 10, 0));
 
         javax.swing.GroupLayout panelChatLayout = new javax.swing.GroupLayout(panelChat);
@@ -167,6 +183,21 @@ public class PrincipalView extends javax.swing.JFrame {
 
         jPanel3.add(scrollPanelChat, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, 740, 560));
 
+        jPanel1.setBackground(new java.awt.Color(55, 73, 97));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 230, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 640, Short.MAX_VALUE)
+        );
+
+        jPanel3.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1220, 640));
 
         pack();
@@ -175,6 +206,7 @@ public class PrincipalView extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         saveNewMessage();
+        txtMessage.grabFocus();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtMessageKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMessageKeyPressed
@@ -188,7 +220,6 @@ public class PrincipalView extends javax.swing.JFrame {
     private void txtMessageKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMessageKeyReleased
         // TODO add your handling code here:
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-            System.out.println("Pressed");
             saveNewMessage();
         }
     }//GEN-LAST:event_txtMessageKeyReleased
@@ -198,10 +229,11 @@ public class PrincipalView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JPanel listPeople;
     private javax.swing.JPanel panelChat;
     private javax.swing.JScrollPane scrollPanelChat;
+    private javax.swing.JScrollPane scrollPanelPeople;
     private javax.swing.JTextArea txtMessage;
     // End of variables declaration//GEN-END:variables
 }

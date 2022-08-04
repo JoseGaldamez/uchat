@@ -1,7 +1,7 @@
 
 package controllers;
 
-import firebase.FirebaseConnection;
+import firebase.UserFirebase;
 import java.util.concurrent.ExecutionException;
 import models.UserModel;
 import utils.ProcessStates;
@@ -22,7 +22,7 @@ public class LoginController {
             return ProcessStates.PASSWORD_MISSING;
         }
         
-        int reponse = FirebaseConnection.searchUserByEmailAndPassword(user);
+        int reponse = UserFirebase.searchUserByEmailAndPassword(user);
         return reponse;
         
     }

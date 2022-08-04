@@ -2,6 +2,7 @@
 package controllers;
 
 import firebase.FirebaseConnection;
+import firebase.UserFirebase;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -22,7 +23,7 @@ public class RegisterController {
         }
         
         
-        if ( FirebaseConnection.searchUserByEmailAndUserName(user.getEmail(), user.getUsername()) ) {
+        if ( UserFirebase.searchUserByEmailAndUserName(user.getEmail(), user.getUsername()) ) {
             return false;
         }
         

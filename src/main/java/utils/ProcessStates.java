@@ -14,5 +14,6 @@ public class ProcessStates {
     public static int NAME_MISSING = 4;
     public static int USERNAME_MISSING = 5;
     public static int NOT_FOUND = 6;
+    public static int ERROR = 7;
     
 }

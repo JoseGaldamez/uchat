@@ -3,6 +3,8 @@ package views;
 import controllers.LoginController;
 import java.awt.Color;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import models.UserModel;
 import utils.ImagesOfProject;
 import utils.ProcessStates;
@@ -27,6 +29,7 @@ public class Login extends javax.swing.JFrame {
         clearErrors();
         labelLogo.setIcon(ImagesOfProject.getLogoBack() );
         labelPeople.setIcon(ImagesOfProject.getPeople());
+        
         
     }
     
@@ -343,7 +346,14 @@ public class Login extends javax.swing.JFrame {
         if (response == ProcessStates.OK ) {
             errorMessage.setText("Todo salio bien");
             errorMessage.setForeground(Color.GREEN);
-            PrincipalView principal = new PrincipalView();
+            PrincipalView principal = null;
+            try {
+                principal = new PrincipalView();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ExecutionException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
             principal.setVisible(true);
             this.dispose();
             

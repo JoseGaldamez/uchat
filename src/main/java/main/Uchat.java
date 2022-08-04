@@ -5,7 +5,6 @@ package main;
 import firebase.FirebaseConnection;
 import java.io.IOException;
 import views.Login;
-//import views.PrincipalView;
 
 /**
  * @author jose_galdamez

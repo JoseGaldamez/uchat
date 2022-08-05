@@ -77,6 +77,10 @@ public class UserFirebase {
             people.remove(UserFirebase.getUser());
         }
         
+        if(response == ProcessStates.NOT_FOUND ){
+            people.removeAll(people);
+        }
+        
         return response;
 
     }

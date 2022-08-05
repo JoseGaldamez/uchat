@@ -6,9 +6,10 @@ import javax.swing.ImageIcon;
  * @author jose_galdamez
  */
 public class ImagesOfProject {
-    public static String URL_BASE = "./src/main/java/assets/";
-    public static String LOGO = "uchat.png";
-    public static String PEOPLE = "people.png";
+    private static String URL_BASE = "./src/main/java/assets/";
+    private static String LOGO = "uchat.png";
+    private static String PEOPLE = "people.png";
+    private static String CHAT_BACKGROUND = "chat_background.png";
 
     
     public static ImageIcon getLogoBack(){
@@ -17,6 +18,10 @@ public class ImagesOfProject {
     
     public static ImageIcon getPeople(){
         return new ImageIcon(URL_BASE + PEOPLE);
+    }
+    
+    public static ImageIcon getChatBackground(){
+        return new ImageIcon(URL_BASE + CHAT_BACKGROUND);
     }
     
 }

@@ -37,6 +37,8 @@ public class PrincipalView extends javax.swing.JFrame {
     public PrincipalView() throws InterruptedException, ExecutionException{
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setTitle("UChat - " + UserFirebase.getUser().getName() + " <"+ UserFirebase.getUser().getEmail()+">" );
+        
         panelChat.setLayout(new BoxLayout(panelChat, BoxLayout.Y_AXIS));
         listPeople.setLayout(new BoxLayout(listPeople, BoxLayout.Y_AXIS));
         panelChat.setBorder(new EmptyBorder(10,10,10,10));
@@ -84,8 +86,6 @@ public class PrincipalView extends javax.swing.JFrame {
                 panelChat.removeAll();
                 
                 for(QueryDocumentSnapshot document : t.getDocuments() ){
-                    
-                    System.out.println( document.getString("uid") );
                     
                     String uid = document.getString("uid");
                     String name = document.getString("user");
@@ -176,6 +176,7 @@ public class PrincipalView extends javax.swing.JFrame {
 
         scrollPanelPeople.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
+        listPeople.setBackground(new java.awt.Color(255, 255, 255));
         listPeople.setMaximumSize(new java.awt.Dimension(270, 270));
 
         javax.swing.GroupLayout listPeopleLayout = new javax.swing.GroupLayout(listPeople);
@@ -214,8 +215,9 @@ public class PrincipalView extends javax.swing.JFrame {
 
         scrollPanelChat.setBorder(null);
         scrollPanelChat.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPanelChat.setOpaque(false);
 
-        panelChat.setBackground(new java.awt.Color(204, 255, 204));
+        panelChat.setBackground(new java.awt.Color(255, 255, 255));
         panelChat.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 0, 10, 0));
 
         javax.swing.GroupLayout panelChatLayout = new javax.swing.GroupLayout(panelChat);

@@ -1,11 +1,9 @@
 
-
 package main;
 
 import firebase.FirebaseConnection;
 import java.io.IOException;
 import views.Login;
-//import views.PrincipalView;
 
 /**
  * @author jose_galdamez
@@ -13,8 +11,6 @@ import views.Login;
 public class Uchat {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
-        
         try {
             FirebaseConnection.connect();
             Login login = new Login();

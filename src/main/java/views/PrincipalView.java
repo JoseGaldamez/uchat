@@ -1,14 +1,21 @@
 package views;
 
+import com.google.cloud.firestore.CollectionReference;
+import com.google.cloud.firestore.EventListener;
+import com.google.cloud.firestore.FirestoreException;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
+import com.google.cloud.firestore.QuerySnapshot;
 import components.Messages;
 import components.Panels;
+import controllers.ChatController;
+import firebase.FirebaseConnection;
 import firebase.UserFirebase;
 import java.awt.Adjustable;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.awt.event.KeyEvent;
+import java.util.concurrent.ExecutionException;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -16,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
+import models.MessageModel;
 import models.UserFirebaseModel;
 
 /**
@@ -26,15 +34,18 @@ public class PrincipalView extends javax.swing.JFrame {
     /**
      * Creates new form PrincipalView
      */
-    public PrincipalView() {
+    public PrincipalView() throws InterruptedException, ExecutionException{
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setTitle("UChat - " + UserFirebase.getUser().getName() + " <"+ UserFirebase.getUser().getEmail()+">" );
+        
         panelChat.setLayout(new BoxLayout(panelChat, BoxLayout.Y_AXIS));
         listPeople.setLayout(new BoxLayout(listPeople, BoxLayout.Y_AXIS));
         panelChat.setBorder(new EmptyBorder(10,10,10,10));
         listPeople.setBorder(new EmptyBorder(10,10,10,10));
         
         fillPeopleList();
+        fillChatList();
     }
     
     private void scrollToBottom(JScrollPane scrollPane) {
@@ -50,6 +61,8 @@ public class PrincipalView extends javax.swing.JFrame {
         verticalBar.addAdjustmentListener(downScroller);
     }
     
+    
+    
     private void fillPeopleList(){
         for(UserFirebaseModel user : UserFirebase.getPeople()){
             JPanel paneluser = Panels.getPanelPeople(user) ;
@@ -58,17 +71,54 @@ public class PrincipalView extends javax.swing.JFrame {
         }
         
         listPeople.revalidate();
+    }
+    
+    
+    
+    private void fillChatList() throws InterruptedException, ExecutionException{
         
+        CollectionReference docRef = FirebaseConnection.db.collection("chats");
+        docRef.addSnapshotListener(new EventListener<>(){
+            
+            @Override
+            public void onEvent(QuerySnapshot t, FirestoreException fe) {
+                
+                panelChat.removeAll();
+                
+                for(QueryDocumentSnapshot document : t.getDocuments() ){
+                    
+                    String uid = document.getString("uid");
+                    String name = document.getString("user");
+                    String text = document.getString("text");
+                    
+                    MessageModel message = new MessageModel(uid, name, text);
+                    
+                    if (message.getUid().equals(UserFirebase.getUser().getUid()) ) {
+                        saveNewMessage( message.getText() );
+                    } else {
+                        addOtherMessage(message);
+                    }
+                }
+            }
+        } );
         
     }
     
-    public void saveNewMessage(){
-        String text = txtMessage.getText();
-        JLabel message = Messages.getMyMessage(text);        
+    
+    
+    public void saveNewMessage(String m){
+        JLabel message = Messages.getMyMessage(m);        
         panelChat.add(message);
         panelChat.add(Box.createRigidArea(new Dimension(0,10)));
         txtMessage.setText("");
-//      pack();
+        panelChat.revalidate();
+        scrollToBottom(scrollPanelChat);
+    }
+    
+    public void addOtherMessage(MessageModel m){
+        JLabel message = Messages.getOthersMessages(m);
+        panelChat.add(message);
+        panelChat.add(Box.createRigidArea(new Dimension(0,10)));
         panelChat.revalidate();
         scrollToBottom(scrollPanelChat);
     }
@@ -126,6 +176,7 @@ public class PrincipalView extends javax.swing.JFrame {
 
         scrollPanelPeople.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
+        listPeople.setBackground(new java.awt.Color(255, 255, 255));
         listPeople.setMaximumSize(new java.awt.Dimension(270, 270));
 
         javax.swing.GroupLayout listPeopleLayout = new javax.swing.GroupLayout(listPeople);
@@ -164,8 +215,9 @@ public class PrincipalView extends javax.swing.JFrame {
 
         scrollPanelChat.setBorder(null);
         scrollPanelChat.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPanelChat.setOpaque(false);
 
-        panelChat.setBackground(new java.awt.Color(204, 255, 204));
+        panelChat.setBackground(new java.awt.Color(255, 255, 255));
         panelChat.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 0, 10, 0));
 
         javax.swing.GroupLayout panelChatLayout = new javax.swing.GroupLayout(panelChat);
@@ -205,7 +257,11 @@ public class PrincipalView extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        saveNewMessage();
+        //saveNewMessage(txtMessage.getText());
+        
+        int response = ChatController.addMessageToChat(txtMessage.getText());
+        System.out.println(response);
+        
         txtMessage.grabFocus();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -220,7 +276,10 @@ public class PrincipalView extends javax.swing.JFrame {
     private void txtMessageKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMessageKeyReleased
         // TODO add your handling code here:
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-            saveNewMessage();
+            int response = ChatController.addMessageToChat(txtMessage.getText());
+        System.out.println(response);
+        
+        txtMessage.grabFocus();
         }
     }//GEN-LAST:event_txtMessageKeyReleased
 

@@ -29,10 +29,12 @@ public class RegisterController {
         
         
         Map<String, Object> data = new HashMap<>();
+        
         data.put("name", user.getName());
         data.put("email", user.getEmail());
         data.put("username", user.getUsername());
         data.put("password", user.getPassword());
+        data.put("avatar", "nobinario.png");
         
         String document = UUID.randomUUID().toString();
         

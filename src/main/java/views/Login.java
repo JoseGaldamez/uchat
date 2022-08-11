@@ -21,6 +21,10 @@ public class Login extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.configureComponents();
+        
+        txtUser.setText("josegaldamez1991@gmail.com");
+        txtPassword.setText("123456789");
+        
     }
     
     public final void configureComponents(){

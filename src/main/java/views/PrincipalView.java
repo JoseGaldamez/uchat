@@ -25,6 +25,7 @@ import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import models.MessageModel;
 import models.UserFirebaseModel;
+import utils.ImagesOfProject;
 
 /**
  * @author jose_galdamez
@@ -44,8 +45,19 @@ public class PrincipalView extends javax.swing.JFrame {
         panelChat.setBorder(new EmptyBorder(10,10,10,10));
         listPeople.setBorder(new EmptyBorder(10,10,10,10));
         
+        System.out.println( UserFirebase.getUser().getImage() );
+        
+        avatarLabel.setIcon( ImagesOfProject.getAvatar( UserFirebase.getUser().getImage() ) );
+        labelUser.setText(UserFirebase.getUser().getName());
+        labelEmail.setText(UserFirebase.getUser().getEmail());
+        
+        
         fillPeopleList();
         fillChatList();
+    }
+    
+    public void updateImage(){
+        avatarLabel.setIcon( ImagesOfProject.getAvatar( UserFirebase.getUser().getImage() ) );
     }
     
     private void scrollToBottom(JScrollPane scrollPane) {
@@ -142,6 +154,11 @@ public class PrincipalView extends javax.swing.JFrame {
         scrollPanelChat = new javax.swing.JScrollPane();
         panelChat = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
+        avatarLabel = new javax.swing.JLabel();
+        labelUser = new javax.swing.JLabel();
+        labelEmail = new javax.swing.JLabel();
+        btnEditar = new javax.swing.JButton();
+        btnLogout = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("UChat");
@@ -237,18 +254,68 @@ public class PrincipalView extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(55, 73, 97));
 
+        labelUser.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
+        labelUser.setForeground(new java.awt.Color(255, 255, 255));
+        labelUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelUser.setText("name");
+
+        labelEmail.setForeground(new java.awt.Color(255, 255, 255));
+        labelEmail.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelEmail.setText("email");
+
+        btnEditar.setLabel("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
+
+        btnLogout.setText("Cerrar Sesion");
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 230, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addComponent(avatarLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(labelUser, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+                            .addComponent(labelEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(79, 79, 79)
+                        .addComponent(btnEditar))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 640, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(48, 48, 48)
+                .addComponent(avatarLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(labelUser)
+                .addGap(18, 18, 18)
+                .addComponent(labelEmail)
+                .addGap(26, 26, 26)
+                .addComponent(btnEditar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 268, Short.MAX_VALUE)
+                .addComponent(btnLogout)
+                .addGap(36, 36, 36))
         );
 
-        jPanel3.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        jPanel3.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 230, -1));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1220, 640));
 
@@ -283,12 +350,39 @@ public class PrincipalView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtMessageKeyReleased
 
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        // TODO add your handling code here:
+        
+        UserFirebase.setUser(null);
+        UserFirebase.setPeople(null);
+        
+        
+        Login login = new Login();
+        login.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_btnLogoutActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // TODO add your handling code here:
+        
+        EditAvatar editform = new EditAvatar(this);
+        editform.setVisible(true);
+        
+        
+    }//GEN-LAST:event_btnEditarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel avatarLabel;
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnLogout;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel labelEmail;
+    private javax.swing.JLabel labelUser;
     private javax.swing.JPanel listPeople;
     private javax.swing.JPanel panelChat;
     private javax.swing.JScrollPane scrollPanelChat;

@@ -32,6 +32,10 @@ public class UserFirebase {
     public static void setUser(UserFirebaseModel u) {
         user = u;
     }
+    
+    public static void setPeople(List<UserFirebaseModel> p ){
+        people = p;
+    }
 
     public static List<UserFirebaseModel> getPeople() {
         return people;
@@ -53,7 +57,8 @@ public class UserFirebase {
                         document.getString("name"),
                         document.getString("email"),
                         document.getString("username"),
-                        "none" );
+                        document.getString("avatar"));
+            
             
             if (document.getString("email").equals(user.getLogin()) ) {
                 if (document.getString("password").equals(user.getPassword())) {

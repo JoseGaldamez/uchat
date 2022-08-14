@@ -15,7 +15,7 @@ public class ChatController {
     
     public static int addMessageToChat( String message ){
                 
-        MessageModel m = new MessageModel( UserFirebase.getUser().getUid(), UserFirebase.getUser().getName(), message );
+        MessageModel m = new MessageModel( UserFirebase.getUser().getUid(), UserFirebase.getUser().getName(), message, "" );
         int response = ChatFirebase.addMessage(m);
         return response;
     }

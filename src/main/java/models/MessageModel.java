@@ -6,14 +6,26 @@ package models;
 public class MessageModel {
     
     private String uid;
+    private String mid;
     private String user;
     private String text;
 
-    public MessageModel(String uid, String user, String text) {
+    public MessageModel(String uid, String user, String text, String mid) {
         this.uid = uid;
         this.user = user;
         this.text = text;
+        this.mid = mid;
     }
+
+    public String getMid() {
+        return mid;
+    }
+
+    public void setMid(String mid) {
+        this.mid = mid;
+    }
+    
+    
 
     public String getUid() {
         return uid;

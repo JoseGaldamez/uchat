@@ -11,11 +11,19 @@ import controllers.ChatController;
 import firebase.FirebaseConnection;
 import firebase.UserFirebase;
 import java.awt.Adjustable;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -31,6 +39,10 @@ import utils.ImagesOfProject;
  * @author jose_galdamez
  */
 public class PrincipalView extends javax.swing.JFrame {
+    
+    List<String> listMessages = new ArrayList<>();
+    List<UserFirebaseModel> userlist = new ArrayList<>();
+    
     
     /**
      * Creates new form PrincipalView
@@ -52,7 +64,7 @@ public class PrincipalView extends javax.swing.JFrame {
         labelEmail.setText(UserFirebase.getUser().getEmail());
         
         
-        fillPeopleList();
+        fillPeople();
         fillChatList();
     }
     
@@ -75,15 +87,7 @@ public class PrincipalView extends javax.swing.JFrame {
     
     
     
-    private void fillPeopleList(){
-        for(UserFirebaseModel user : UserFirebase.getPeople()){
-            JPanel paneluser = Panels.getPanelPeople(user) ;
-            listPeople.add(paneluser);
-            listPeople.add(Box.createRigidArea(new Dimension(0, 20)));
-        }
-        
-        listPeople.revalidate();
-    }
+
     
     
     
@@ -95,25 +99,77 @@ public class PrincipalView extends javax.swing.JFrame {
             @Override
             public void onEvent(QuerySnapshot t, FirestoreException fe) {
                 
-                panelChat.removeAll();
-                
                 for(QueryDocumentSnapshot document : t.getDocuments() ){
                     
                     String uid = document.getString("uid");
                     String name = document.getString("user");
                     String text = document.getString("text");
+                    String mid = document.getId();
                     
-                    MessageModel message = new MessageModel(uid, name, text);
+                    MessageModel message = new MessageModel(uid, name, text, mid);
                     
-                    if (message.getUid().equals(UserFirebase.getUser().getUid()) ) {
-                        saveNewMessage( message.getText() );
-                    } else {
-                        addOtherMessage(message);
+                    if( !listMessages.contains(message.getMid()) ){
+                        
+                        System.out.println("Mensaje nuevo" + message.getUid() );
+                        
+                        if (message.getUid().equals(UserFirebase.getUser().getUid()) ) {
+                            saveNewMessage( message.getText() );
+                        } else {
+                            addOtherMessage(message);
+                        }
+                        
+                        listMessages.add(message.getMid());
                     }
+                    
+                    
                 }
             }
         } );
         
+    }
+    
+    
+    private void fillPeople() throws InterruptedException, ExecutionException{
+       
+        
+        CollectionReference docRef = FirebaseConnection.db.collection("users");
+        docRef.addSnapshotListener(new EventListener<>(){
+            
+            @Override
+            public void onEvent(QuerySnapshot t, FirestoreException fe) {
+                
+                userlist.removeAll(userlist);
+                
+                for(QueryDocumentSnapshot document : t.getDocuments() ){
+                    
+                    UserFirebaseModel u = new UserFirebaseModel(
+                        document.getId(),
+                        document.getString("name"),
+                        document.getString("email"),
+                        document.getString("username"),
+                        document.getString("avatar")
+                    );
+                    
+                    
+                    userlist.add(u);
+                    
+                }
+                
+                fillPeopleList(userlist);
+            }
+        } );
+        
+    }
+    
+        private void fillPeopleList( List<UserFirebaseModel> userlist ){
+            listPeople.removeAll();
+        for(UserFirebaseModel user : userlist){
+            JPanel paneluser = Panels.getPanelPeople(user) ;
+            listPeople.add(paneluser);
+            listPeople.add(Box.createRigidArea(new Dimension(0, 20)));
+        }
+        
+        listPeople.revalidate();
     }
     
     
@@ -133,6 +189,21 @@ public class PrincipalView extends javax.swing.JFrame {
         panelChat.add(Box.createRigidArea(new Dimension(0,10)));
         panelChat.revalidate();
         scrollToBottom(scrollPanelChat);
+    }
+    
+    public void callPDF(UserFirebaseModel u){
+        if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+            try {
+                String link = "https://uchat-pdf.codigocorrecto.com/?name=" + u.getName() + "&email="+ u.getEmail() +"&user=" + u.getUsername() + "&uid=" + u.getUid();
+                URI url = new URI(link);
+                
+                Desktop.getDesktop().browse(url);
+            } catch (URISyntaxException ex) {
+                Logger.getLogger(PrincipalView.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(PrincipalView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     /**
@@ -292,11 +363,11 @@ public class PrincipalView extends javax.swing.JFrame {
                             .addComponent(labelUser, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
                             .addComponent(labelEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(79, 79, 79)
-                        .addComponent(btnEditar))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(15, 15, 15)
-                        .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(79, 79, 79)
+                        .addComponent(btnEditar)))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -354,7 +425,7 @@ public class PrincipalView extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         UserFirebase.setUser(null);
-        UserFirebase.setPeople(null);
+        UserFirebase.setPeople( new ArrayList() );
         
         
         Login login = new Login();
